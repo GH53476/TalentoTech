@@ -1,312 +1,398 @@
 // Esperar a que el DOM esté completamente cargado
-document.addEventListener("DOMContentLoaded", function () {
-  // Navegación suave para enlaces internos
-  const navLinks = document.querySelectorAll('.nav-menu a[href^="#"]');
+document.addEventListener('DOMContentLoaded', function() {
+    
+    // Navegación suave para enlaces internos
+    const navLinks = document.querySelectorAll('a[href^="#"]');
+    navLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('href');
+            const targetSection = document.querySelector(targetId);
+            
+            if (targetSection) {
+                const headerHeight = document.querySelector('.header').offsetHeight;
+                const targetPosition = targetSection.offsetTop - headerHeight - 20;
+                
+                window.scrollTo({
+                    top: targetPosition,
+                    behavior: 'smooth'
+                });
+            }
+        });
+    });
 
-  navLinks.forEach((link) => {
-    link.addEventListener("click", function (e) {
-      e.preventDefault();
+    // Header con efecto de transparencia al hacer scroll
+    const header = document.querySelector('.header');
+    let lastScrollTop = 0;
 
-      const targetId = this.getAttribute("href");
-      const targetSection = document.querySelector(targetId);
+    window.addEventListener('scroll', function() {
+        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        
+        // Cambiar opacidad del header según el scroll
+        if (scrollTop > 100) {
+            header.style.backgroundColor = 'rgba(255, 255, 255, 0.98)';
+            header.style.boxShadow = '0 4px 20px rgba(0, 0, 0, 0.1)';
+        } else {
+            header.style.backgroundColor = 'rgba(255, 255, 255, 0.95)';
+            header.style.boxShadow = '0 1px 2px 0 rgb(0 0 0 / 0.05)';
+        }
+        
+        lastScrollTop = scrollTop;
+    });
 
-      if (targetSection) {
-        const headerHeight = document.querySelector(".nav").offsetHeight;
-        const targetPosition = targetSection.offsetTop - headerHeight;
+    // Animación de elementos al hacer scroll (Intersection Observer)
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
 
+    const observer = new IntersectionObserver(function(entries) {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            }
+        });
+    }, observerOptions);
+
+    // Observar elementos para animación
+    const animatedElements = document.querySelectorAll('.stat-card, .info-card, .callout-card, .chatbot-info');
+    animatedElements.forEach(el => {
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(30px)';
+        el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        observer.observe(el);
+    });
+
+    // Contador animado para estadísticas
+    function animateCounter(element, target, duration = 2000) {
+        let start = 0;
+        const increment = target / (duration / 16);
+        
+        function updateCounter() {
+            start += increment;
+            if (start < target) {
+                element.textContent = Math.floor(start);
+                requestAnimationFrame(updateCounter);
+            } else {
+                element.textContent = target;
+            }
+        }
+        updateCounter();
+    }
+
+    // Efecto parallax suave para el hero
+    const hero = document.querySelector('.hero');
+    window.addEventListener('scroll', function() {
+        const scrolled = window.pageYOffset;
+        const rate = scrolled * -0.5;
+        hero.style.transform = `translateY(${rate}px)`;
+    });
+
+    // Botones interactivos
+    const buttons = document.querySelectorAll('.btn');
+    buttons.forEach(button => {
+        button.addEventListener('mouseenter', function() {
+            this.style.transform = 'translateY(-2px) scale(1.02)';
+        });
+        
+        button.addEventListener('mouseleave', function() {
+            this.style.transform = 'translateY(0) scale(1)';
+        });
+        
+        button.addEventListener('click', function(e) {
+            // Efecto de ripple
+            const ripple = document.createElement('span');
+            const rect = this.getBoundingClientRect();
+            const size = Math.max(rect.width, rect.height);
+            const x = e.clientX - rect.left - size / 2;
+            const y = e.clientY - rect.top - size / 2;
+            
+            ripple.style.width = ripple.style.height = size + 'px';
+            ripple.style.left = x + 'px';
+            ripple.style.top = y + 'px';
+            ripple.classList.add('ripple');
+            
+            this.appendChild(ripple);
+            
+            setTimeout(() => {
+                ripple.remove();
+            }, 600);
+        });
+    });
+
+    // Tooltip para elementos informativos
+    const tooltipElements = document.querySelectorAll('[data-tooltip]');
+    tooltipElements.forEach(element => {
+        element.addEventListener('mouseenter', function() {
+            const tooltip = document.createElement('div');
+            tooltip.className = 'tooltip';
+            tooltip.textContent = this.getAttribute('data-tooltip');
+            document.body.appendChild(tooltip);
+            
+            const rect = this.getBoundingClientRect();
+            tooltip.style.left = rect.left + (rect.width / 2) - (tooltip.offsetWidth / 2) + 'px';
+            tooltip.style.top = rect.top - tooltip.offsetHeight - 10 + 'px';
+        });
+        
+        element.addEventListener('mouseleave', function() {
+            const tooltip = document.querySelector('.tooltip');
+            if (tooltip) {
+                tooltip.remove();
+            }
+        });
+    });
+
+    // Lazy loading para imágenes
+    const images = document.querySelectorAll('img[data-src]');
+    const imageObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const img = entry.target;
+                img.src = img.dataset.src;
+                img.classList.remove('lazy');
+                imageObserver.unobserve(img);
+            }
+        });
+    });
+
+    images.forEach(img => imageObserver.observe(img));
+
+    // Menú móvil (hamburger menu)
+    const mobileMenuButton = document.createElement('button');
+    mobileMenuButton.className = 'mobile-menu-btn';
+    mobileMenuButton.innerHTML = '<i class="fas fa-bars"></i>';
+    
+    const nav = document.querySelector('.nav');
+    const headerContent = document.querySelector('.header-content');
+    
+    // Solo agregar en pantallas pequeñas
+    function checkMobileMenu() {
+        if (window.innerWidth <= 768) {
+            if (!document.querySelector('.mobile-menu-btn')) {
+                headerContent.insertBefore(mobileMenuButton, nav);
+                nav.classList.add('mobile-nav');
+            }
+        } else {
+            const mobileBtn = document.querySelector('.mobile-menu-btn');
+            if (mobileBtn) {
+                mobileBtn.remove();
+                nav.classList.remove('mobile-nav', 'active');
+            }
+        }
+    }
+    
+    checkMobileMenu();
+    window.addEventListener('resize', checkMobileMenu);
+    
+    // Toggle del menú móvil
+    document.addEventListener('click', function(e) {
+        if (e.target.closest('.mobile-menu-btn')) {
+            nav.classList.toggle('active');
+            const icon = e.target.closest('.mobile-menu-btn').querySelector('i');
+            icon.classList.toggle('fa-bars');
+            icon.classList.toggle('fa-times');
+        }
+        
+        // Cerrar menú al hacer clic en un enlace
+        if (e.target.closest('.nav a')) {
+            nav.classList.remove('active');
+            const icon = document.querySelector('.mobile-menu-btn i');
+            if (icon) {
+                icon.classList.add('fa-bars');
+                icon.classList.remove('fa-times');
+            }
+        }
+    });
+
+    // Efecto de typing para el título principal
+    function typeWriter(element, text, speed = 100) {
+        let i = 0;
+        element.innerHTML = '';
+        
+        function type() {
+            if (i < text.length) {
+                element.innerHTML += text.charAt(i);
+                i++;
+                setTimeout(type, speed);
+            }
+        }
+        type();
+    }
+
+    // Aplicar efecto typing al título cuando se carga la página
+    const heroTitle = document.querySelector('.hero-title');
+    if (heroTitle) {
+        const originalText = heroTitle.textContent;
+        setTimeout(() => {
+            typeWriter(heroTitle, originalText, 150);
+        }, 500);
+    }
+
+    // Scroll to top button
+    const scrollToTopBtn = document.createElement('button');
+    scrollToTopBtn.className = 'scroll-to-top';
+    scrollToTopBtn.innerHTML = '<i class="fas fa-arrow-up"></i>';
+    document.body.appendChild(scrollToTopBtn);
+
+    window.addEventListener('scroll', function() {
+        if (window.pageYOffset > 300) {
+            scrollToTopBtn.classList.add('show');
+        } else {
+            scrollToTopBtn.classList.remove('show');
+        }
+    });
+
+    scrollToTopBtn.addEventListener('click', function() {
         window.scrollTo({
-          top: targetPosition,
-          behavior: "smooth",
+            top: 0,
+            behavior: 'smooth'
         });
-      }
-    });
-  });
-
-  // Animación de aparición al hacer scroll
-  const observerOptions = {
-    threshold: 0.1,
-    rootMargin: "0px 0px -50px 0px",
-  };
-
-  const observer = new IntersectionObserver(function (entries) {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        entry.target.style.opacity = "1";
-        entry.target.style.transform = "translateY(0)";
-      }
-    });
-  }, observerOptions);
-
-  // Observar elementos para animación
-  const animatedElements = document.querySelectorAll(".card, .habits-column");
-  animatedElements.forEach((el) => {
-    el.style.opacity = "0";
-    el.style.transform = "translateY(30px)";
-    el.style.transition = "opacity 0.6s ease, transform 0.6s ease";
-    observer.observe(el);
-  });
-
-  // Efecto hover mejorado para las cards
-  const cards = document.querySelectorAll(".card");
-  cards.forEach((card) => {
-    card.addEventListener("mouseenter", function () {
-      this.style.transform = "translateY(-8px) scale(1.02)";
     });
 
-    card.addEventListener("mouseleave", function () {
-      this.style.transform = "translateY(0) scale(1)";
+    // Preloader
+    window.addEventListener('load', function() {
+        const preloader = document.querySelector('.preloader');
+        if (preloader) {
+            preloader.style.opacity = '0';
+            setTimeout(() => {
+                preloader.style.display = 'none';
+            }, 300);
+        }
     });
-  });
 
-  // Contador de visitantes (simulado)
-  let visitorCount = localStorage.getItem("visitorCount") || 0;
-  visitorCount = parseInt(visitorCount) + 1;
-  localStorage.setItem("visitorCount", visitorCount);
+    // Validación de formularios (si los hay)
+    const forms = document.querySelectorAll('form');
+    forms.forEach(form => {
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            // Aquí puedes agregar lógica de validación específica
+            console.log('Formulario enviado');
+        });
+    });
 
-  // Mostrar contador en el footer
-  const footer = document.querySelector(".footer p");
-  if (footer) {
-    footer.innerHTML += ` | Visitantes: ${visitorCount}`;
-  }
+    // Efecto de hover para las tarjetas de estadísticas
+    const statCards = document.querySelectorAll('.stat-card');
+    statCards.forEach(card => {
+        card.addEventListener('mouseenter', function() {
+            this.style.transform = 'translateY(-10px) scale(1.02)';
+        });
+        
+        card.addEventListener('mouseleave', function() {
+            this.style.transform = 'translateY(0) scale(1)';
+        });
+    });
 
-  // Función para mostrar mensaje de bienvenida
-  function showWelcomeMessage() {
-    const welcomeDiv = document.createElement("div");
-    welcomeDiv.className = "welcome-message";
-    welcomeDiv.innerHTML = `
-            <div style="
-                position: fixed;
-                top: 20px;
-                right: 20px;
-                background: linear-gradient(135deg, #4a90e2, #f39c12);
-                color: white;
+    // Agregar estilos CSS dinámicos para efectos adicionales
+    const dynamicStyles = document.createElement('style');
+    dynamicStyles.textContent = `
+        .ripple {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(0);
+            animation: ripple-animation 0.6s linear;
+            pointer-events: none;
+        }
+        
+        @keyframes ripple-animation {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+        
+        .tooltip {
+            position: absolute;
+            background: var(--text-primary);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: var(--border-radius);
+            font-size: 0.875rem;
+            z-index: 1000;
+            pointer-events: none;
+            white-space: nowrap;
+        }
+        
+        .tooltip::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            border: 5px solid transparent;
+            border-top-color: var(--text-primary);
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+        
+        .scroll-to-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 50px;
+            height: 50px;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 1000;
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .scroll-to-top.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .scroll-to-top:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+        
+        @media (max-width: 768px) {
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .mobile-nav {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: var(--bg-primary);
+                flex-direction: column;
                 padding: 1rem;
-                border-radius: 8px;
-                box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-                z-index: 1000;
-                animation: slideIn 0.5s ease;
-                max-width: 300px;
-            ">
-                <h4 style="margin: 0 0 0.5rem 0;">🐾 ¡Bienvenido!</h4>
-                <p style="margin: 0; font-size: 0.9rem;">Explora el fascinante mundo de perros y gatos</p>
-                <button onclick="this.parentElement.remove()" style="
-                    background: rgba(255,255,255,0.2);
-                    border: none;
-                    color: white;
-                    padding: 0.3rem 0.8rem;
-                    border-radius: 4px;
-                    cursor: pointer;
-                    margin-top: 0.5rem;
-                    font-size: 0.8rem;
-                ">Cerrar</button>
-            </div>
-        `;
-
-    document.body.appendChild(welcomeDiv);
-
-    // Remover automáticamente después de 5 segundos
-    setTimeout(() => {
-      if (welcomeDiv.parentElement) {
-        welcomeDiv.remove();
-      }
-    }, 5000);
-  }
-
-  // Mostrar mensaje de bienvenida después de 1 segundo
-  setTimeout(showWelcomeMessage, 1000);
-
-  // Función para agregar efecto de typing en el hero
-  function typeWriter(element, text, speed = 100) {
-    let i = 0;
-    element.innerHTML = "";
-
-    function type() {
-      if (i < text.length) {
-        element.innerHTML += text.charAt(i);
-        i++;
-        setTimeout(type, speed);
-      }
-    }
-    type();
-  }
-
-  // Aplicar efecto typing al título del hero
-  const heroTitle = document.querySelector(".hero h2");
-  if (heroTitle) {
-    const originalText = heroTitle.textContent;
-    typeWriter(heroTitle, originalText, 80);
-  }
-
-  // Función para agregar tooltips a las cards
-  function addTooltips() {
-    const cards = document.querySelectorAll(".card");
-    cards.forEach((card) => {
-      const title = card.querySelector("h3").textContent;
-      card.setAttribute("title", `Haz clic para saber más sobre ${title}`);
-    });
-  }
-
-  addTooltips();
-
-  // Función para cambiar tema (claro/oscuro)
-  function toggleTheme() {
-    const body = document.body;
-    const currentTheme = body.getAttribute("data-theme");
-
-    if (currentTheme === "dark") {
-      body.removeAttribute("data-theme");
-      localStorage.setItem("theme", "light");
-    } else {
-      body.setAttribute("data-theme", "dark");
-      localStorage.setItem("theme", "dark");
-    }
-  }
-
-  // Cargar tema guardado
-  const savedTheme = localStorage.getItem("theme");
-  if (savedTheme === "dark") {
-    document.body.setAttribute("data-theme", "dark");
-  }
-
-  // Agregar botón de cambio de tema
-  const themeButton = document.createElement("button");
-  themeButton.innerHTML = "🌙";
-  themeButton.style.cssText = `
-        position: fixed;
-        bottom: 20px;
-        right: 20px;
-        width: 50px;
-        height: 50px;
-        border-radius: 50%;
-        border: none;
-        background: linear-gradient(135deg, #4a90e2, #f39c12);
-        color: white;
-        font-size: 1.2rem;
-        cursor: pointer;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-        z-index: 1000;
-        transition: transform 0.3s ease;
+                box-shadow: var(--shadow-md);
+                transform: translateY(-100%);
+                opacity: 0;
+                visibility: hidden;
+                transition: all 0.3s ease;
+            }
+            
+            .mobile-nav.active {
+                transform: translateY(0);
+                opacity: 1;
+                visibility: visible;
+            }
+        }
     `;
+    document.head.appendChild(dynamicStyles);
 
-  themeButton.addEventListener("click", toggleTheme);
-  themeButton.addEventListener("mouseenter", function () {
-    this.style.transform = "scale(1.1)";
-  });
-  themeButton.addEventListener("mouseleave", function () {
-    this.style.transform = "scale(1)";
-  });
-
-  document.body.appendChild(themeButton);
-
-  // Función para agregar CSS del tema oscuro
-  function addDarkThemeCSS() {
-    const style = document.createElement("style");
-    style.textContent = `
-            [data-theme="dark"] {
-                --text-color: #ecf0f1;
-                --light-bg: #2c3e50;
-                --white: #34495e;
-            }
-            
-            [data-theme="dark"] .card {
-                background: #34495e;
-                color: #ecf0f1;
-            }
-            
-            [data-theme="dark"] .habits-list li {
-                border-bottom-color: #4a5568;
-            }
-            
-            [data-theme="dark"] .habits-list li:hover {
-                background: #2c3e50;
-            }
-        `;
-    document.head.appendChild(style);
-  }
-
-  addDarkThemeCSS();
-
-  // Función para agregar animación de scroll
-  function addScrollAnimation() {
-    const style = document.createElement("style");
-    style.textContent = `
-            @keyframes slideIn {
-                from {
-                    transform: translateX(100%);
-                    opacity: 0;
-                }
-                to {
-                    transform: translateX(0);
-                    opacity: 1;
-                }
-            }
-        `;
-    document.head.appendChild(style);
-  }
-
-  addScrollAnimation();
-
-  // Función para optimizar el rendimiento del iframe
-  function optimizeIframe() {
-    const iframe = document.querySelector("iframe");
-    if (iframe) {
-      // Cargar iframe solo cuando esté visible
-      const iframeObserver = new IntersectionObserver(function (entries) {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            iframe.style.opacity = "1";
-            iframeObserver.unobserve(iframe);
-          }
-        });
-      });
-
-      iframe.style.opacity = "0";
-      iframe.style.transition = "opacity 0.5s ease";
-      iframeObserver.observe(iframe);
-    }
-  }
-
-  optimizeIframe();
-
-  // Función para agregar efecto de partículas en el header
-  function addParticleEffect() {
-    const header = document.querySelector(".header");
-    if (header) {
-      for (let i = 0; i < 20; i++) {
-        const particle = document.createElement("div");
-        particle.style.cssText = `
-                    position: absolute;
-                    width: 4px;
-                    height: 4px;
-                    background: rgba(255,255,255,0.3);
-                    border-radius: 50%;
-                    pointer-events: none;
-                    animation: float ${
-                      3 + Math.random() * 4
-                    }s infinite ease-in-out;
-                    left: ${Math.random() * 100}%;
-                    top: ${Math.random() * 100}%;
-                `;
-        header.appendChild(particle);
-      }
-
-      const style = document.createElement("style");
-      style.textContent = `
-                @keyframes float {
-                    0%, 100% { transform: translateY(0px) rotate(0deg); }
-                    50% { transform: translateY(-20px) rotate(180deg); }
-                }
-            `;
-      document.head.appendChild(style);
-    }
-  }
-
-  addParticleEffect();
-
-  console.log("🐾 Portafolio de Perros y Gatos cargado exitosamente!");
+    // Console log para confirmar que el script se cargó correctamente
+    console.log('🚀 Script de Cáncer de Piel cargado correctamente');
+    console.log('📱 Página optimizada para dispositivos móviles');
+    console.log('🎨 Diseño moderno y responsivo activo');
 });
-
-// Función global para cerrar mensajes
-window.closeMessage = function (element) {
-  element.remove();
-};
