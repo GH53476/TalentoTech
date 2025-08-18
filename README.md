@@ -1,100 +1,189 @@
-# 🐾 Portafolio: Perros y Gatos
+# 🏥 Página Web sobre Cáncer de Piel
 
-Un portafolio web moderno y responsivo que explora el fascinante mundo de perros y gatos, sus diferentes especies, hábitos y costumbres.
+Una página web moderna y profesional dedicada a proporcionar información médica confiable sobre el cáncer de piel, con un diseño responsivo y un asistente virtual integrado.
 
-## ✨ Características
+## 📋 Características
 
-- **Diseño Moderno**: Interfaz limpia y atractiva con gradientes y animaciones
-- **Totalmente Responsivo**: Se adapta perfectamente a dispositivos móviles, tablets y desktop
-- **Navegación Suave**: Scroll suave entre secciones
-- **Animaciones Interactivas**: Efectos de hover y animaciones de entrada
-- **Tema Oscuro/Claro**: Botón para cambiar entre temas
-- **Chatbot Integrado**: Iframe con chatbot de expertos en mascotas
-- **Optimizado para Rendimiento**: Código ligero y rápido
+### 🎨 Diseño y UX
+- **Diseño moderno y profesional** con esquema de colores azul y blanco
+- **Completamente responsivo** - optimizado para móviles, tablets y desktop
+- **Navegación suave** con scroll automático a secciones
+- **Animaciones fluidas** y efectos visuales atractivos
+- **Tipografía legible** usando la fuente Inter de Google Fonts
+- **Iconografía moderna** con Font Awesome
 
-## 🚀 Tecnologías Utilizadas
+### 📱 Funcionalidades
+- **Header fijo** con navegación transparente
+- **Sección hero** con estadísticas destacadas
+- **Información médica completa** sobre cáncer de piel
+- **Gráficos y estadísticas** integrados
+- **Chatbot médico** para consultas interactivas
+- **Menú móvil** con hamburger menu
+- **Botón de scroll to top**
+- **Efectos hover** y animaciones de entrada
 
-- **HTML5**: Estructura semántica y accesible
-- **CSS3**: Estilos modernos con variables CSS, Grid y Flexbox
-- **JavaScript Vanilla**: Interactividad sin dependencias externas
-- **Responsive Design**: Mobile-first approach
+### 🏗️ Estructura de la Página
 
-## 📁 Estructura del Proyecto
+1. **Header** - Navegación principal con logo
+2. **Hero Section** - Título principal y estadísticas clave
+3. **Introducción** - Información general sobre cáncer de piel
+4. **Estadísticas** - Gráficos y datos visuales
+5. **Conclusión** - Resumen y recomendaciones
+6. **Chatbot** - Asistente virtual integrado
+7. **Footer** - Enlaces útiles y contacto
 
+## 🚀 Instalación y Uso
+
+### Requisitos
+- Navegador web moderno (Chrome, Firefox, Safari, Edge)
+- Conexión a internet (para fuentes y chatbot)
+
+### Instalación
+1. Descarga o clona este repositorio
+2. Abre el archivo `index.html` en tu navegador
+3. ¡Listo! La página está lista para usar
+
+### Archivos del Proyecto
 ```
+Cancer de Piel/
 ├── index.html          # Página principal
 ├── styles.css          # Estilos CSS
 ├── script.js           # Funcionalidades JavaScript
-└── README.md           # Documentación
+├── README.md           # Documentación
+├── distribucion de horas de sol diarias por diagnostico de cancer de piel.jpg
+└── horas de sol diarias vs probabilidad del cancer de piel.jpg
 ```
 
-## 🎯 Secciones del Portafolio
+## 🎯 Tecnologías Utilizadas
 
-1. **Header con Navegación**: Menú sticky con enlaces a secciones
-2. **Razas de Perros**: Información sobre 4 razas populares
-3. **Razas de Gatos**: Información sobre 4 razas populares
-4. **Hábitos y Costumbres**: Comparación de comportamientos
-5. **Chatbot**: Integración del iframe de Chatbase
-6. **Footer**: Información del proyecto
+- **HTML5** - Estructura semántica
+- **CSS3** - Estilos modernos con CSS Grid y Flexbox
+- **JavaScript ES6+** - Interactividad y animaciones
+- **Font Awesome** - Iconografía
+- **Google Fonts** - Tipografía Inter
+- **Chatbase** - Chatbot integrado
 
-## 🎨 Características de Diseño
+## 📊 Secciones Principales
 
-- **Paleta de Colores**: Azul y naranja con gradientes
-- **Tipografía**: Segoe UI para mejor legibilidad
-- **Iconos**: Emojis para representar animales
-- **Efectos Visuales**: Sombras, transiciones y animaciones
-- **Partículas**: Efecto de partículas flotantes en el header
+### Hero Section
+- Título principal "Cáncer de Piel"
+- Subtítulo descriptivo
+- Estadísticas clave con iconos
+- Fondo degradado con efecto parallax
 
-## 🔧 Funcionalidades JavaScript
+### Introducción
+- Información general sobre la enfermedad
+- Tipos principales de cáncer de piel
+- Factores de riesgo
+- Tarjeta informativa con datos curiosos
 
-- Navegación suave entre secciones
-- Animaciones de aparición al hacer scroll
-- Efectos hover mejorados
-- Contador de visitantes
-- Mensaje de bienvenida
-- Efecto typing en el título
-- Cambio de tema (claro/oscuro)
-- Optimización del iframe
-- Efectos de partículas
+### Estadísticas
+- Dos gráficos principales:
+  - Distribución de exposición solar por diagnóstico
+  - Probabilidad vs exposición solar
+- Descripciones detalladas de cada gráfico
+- Puntos destacados con iconos
+
+### Conclusión
+- Resumen de hallazgos principales
+- Recomendaciones de prevención
+- Tarjeta de llamada a la acción
+- Botones interactivos
+
+### Chatbot
+- Asistente virtual médico
+- Información sobre capacidades
+- Advertencia sobre uso educativo
+- Integración con Chatbase
+
+## 🎨 Paleta de Colores
+
+```css
+--primary-color: #2563eb      /* Azul principal */
+--primary-dark: #1d4ed8       /* Azul oscuro */
+--primary-light: #3b82f6      /* Azul claro */
+--accent-color: #0ea5e9       /* Azul acento */
+--success-color: #10b981      /* Verde éxito */
+--text-primary: #1e293b       /* Texto principal */
+--text-secondary: #64748b     /* Texto secundario */
+--bg-primary: #ffffff         /* Fondo principal */
+--bg-secondary: #f8fafc       /* Fondo secundario */
+```
 
 ## 📱 Responsive Design
 
-- **Mobile**: 480px y menos
-- **Tablet**: 768px y menos
-- **Desktop**: 1200px máximo
+La página está optimizada para:
+- **Desktop** (1200px+)
+- **Tablet** (768px - 1199px)
+- **Mobile** (320px - 767px)
 
-## 🚀 Cómo Usar
+### Breakpoints
+- `@media (max-width: 768px)` - Tablets y móviles
+- `@media (max-width: 480px)` - Móviles pequeños
 
-1. Descarga todos los archivos en una carpeta
-2. Abre `index.html` en tu navegador web
-3. ¡Explora el portafolio!
+## 🔧 Personalización
 
-## 🌟 Características Especiales
+### Cambiar Colores
+Edita las variables CSS en `styles.css`:
+```css
+:root {
+    --primary-color: #tu-color;
+    --accent-color: #tu-accento;
+    /* ... */
+}
+```
 
-- **Lazy Loading**: El iframe se carga solo cuando es visible
-- **Local Storage**: Guarda preferencias del usuario
-- **Intersection Observer**: Optimiza animaciones
-- **CSS Variables**: Fácil personalización de colores
-- **Accesibilidad**: Estructura semántica y navegación por teclado
+### Agregar Contenido
+1. Modifica el HTML en `index.html`
+2. Ajusta los estilos en `styles.css`
+3. Agrega funcionalidades en `script.js`
 
-## 📊 Optimizaciones de Rendimiento
+### Cambiar Chatbot
+Reemplaza el iframe en la sección chatbot:
+```html
+<iframe src="tu-url-del-chatbot" ...></iframe>
+```
 
-- CSS optimizado con variables
-- JavaScript modular y eficiente
-- Animaciones con `will-change`
-- Carga diferida del iframe
-- Sin dependencias externas
+## 🌟 Características Avanzadas
 
-## 🎯 Próximas Mejoras
+### Animaciones
+- **Fade in** al hacer scroll
+- **Parallax** en hero section
+- **Hover effects** en tarjetas
+- **Typing effect** en título principal
+- **Ripple effect** en botones
 
-- [ ] Galería de imágenes reales
-- [ ] Más razas de perros y gatos
-- [ ] Sistema de búsqueda
-- [ ] Información más detallada
-- [ ] Integración con APIs de mascotas
+### Interactividad
+- **Navegación suave** entre secciones
+- **Header dinámico** con transparencia
+- **Menú móvil** responsive
+- **Scroll to top** button
+- **Tooltips** informativos
+
+### Performance
+- **Lazy loading** para imágenes
+- **Intersection Observer** para animaciones
+- **CSS optimizado** con variables
+- **JavaScript modular** y eficiente
+
+## 📞 Soporte
+
+Para soporte técnico o preguntas sobre el proyecto:
+- Revisa la documentación en este README
+- Verifica la consola del navegador para errores
+- Asegúrate de que todos los archivos estén en la misma carpeta
+
+## 📄 Licencia
+
+Este proyecto está diseñado para uso educativo y médico. La información proporcionada es solo con fines informativos y no sustituye la consulta médica profesional.
+
+## 🙏 Agradecimientos
+
+- **Font Awesome** por los iconos
+- **Google Fonts** por la tipografía Inter
+- **Chatbase** por la plataforma del chatbot
+- **Comunidad médica** por la información científica
 
 ---
 
-**Desarrollado con ❤️ para amantes de las mascotas**
-
-_Este portafolio es una demostración de habilidades en HTML, CSS y JavaScript, creando una experiencia web moderna y atractiva sobre el mundo de perros y gatos._
+**Nota importante**: Esta página web proporciona información educativa general sobre el cáncer de piel. Para diagnóstico y tratamiento específico, siempre consulta con un profesional de la salud calificado.
