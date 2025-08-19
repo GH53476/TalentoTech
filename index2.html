@@ -1,0 +1,311 @@
+<html lang="es"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cáncer de Piel - Información Médica</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<style type="text/css" id="operaUserStyle"></style><style>
+        .ripple {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(0);
+            animation: ripple-animation 0.6s linear;
+            pointer-events: none;
+        }
+        
+        @keyframes ripple-animation {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+        
+        .tooltip {
+            position: absolute;
+            background: var(--text-primary);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: var(--border-radius);
+            font-size: 0.875rem;
+            z-index: 1000;
+            pointer-events: none;
+            white-space: nowrap;
+        }
+        
+        .tooltip::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            border: 5px solid transparent;
+            border-top-color: var(--text-primary);
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+        
+        .scroll-to-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 50px;
+            height: 50px;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 1000;
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .scroll-to-top.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .scroll-to-top:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+        
+        @media (max-width: 768px) {
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .mobile-nav {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: var(--bg-primary);
+                flex-direction: column;
+                padding: 1rem;
+                box-shadow: var(--shadow-md);
+                transform: translateY(-100%);
+                opacity: 0;
+                visibility: hidden;
+                transition: all 0.3s ease;
+            }
+            
+            .mobile-nav.active {
+                transform: translateY(0);
+                opacity: 1;
+                visibility: visible;
+            }
+        }
+    </style></head>
+<body>
+    <!-- Header -->
+    <header class="header" style="background-color: rgba(255, 255, 255, 0.95); box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-heartbeat"></i>
+                    <span>MedInfo</span>
+                </div>
+                <nav class="nav">
+                    <a href="#inicio">Inicio</a>
+                    <a href="#introduccion">Introducción</a>
+                    <a href="#estadisticas">Estadísticas</a>
+                    <a href="#conclusion">Conclusión</a>
+                    <a href="#chatbot">Chatbot</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="inicio" class="hero" style="transform: translateY(0px);"><br>
+        
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title">Cáncer de Piel</h1>
+                
+                
+            </div>
+        </div>
+    </section>
+
+    <!-- Introducción -->
+    <section id="introduccion" class="section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Introducción</h2>
+                <div class="section-divider"></div>
+            </div>
+            <div class="intro-content">
+                <div class="intro-text">
+                    <p>Los gráficos presentados fueron generados a partir de un conjunto de datos simulados que buscan reproducir patrones observados en contextos reales. Se analizaron 300 casos considerando variables como el número de horas diarias de exposición solar, la edad y el fenotipo cutáneo. A partir de estos factores, y mediante una fórmula de carácter estimativo, se calculó de manera ficticia la probabilidad de desarrollar cáncer de piel. Asimismo, se dispone de un apartado orientado al diagnóstico.</p>
+                    
+                    
+                    
+                    
+                    
+                </div>
+                <div class="intro-image">
+                    <div class="info-card" style="opacity: 1; transform: translateY(0px); transition: opacity 0.6s, transform 0.6s;">
+                        <i class="fas fa-lightbulb"></i>
+                        <h3>¿Sabías que?</h3>
+                        <p>Los rayos ultravioleta (UV) del sol es la principal causa del cáncer de piel.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Estadísticas -->
+    <section id="estadisticas" class="section bg-light">
+        <div class="container">
+            <div class="section-header">
+                <h2>Estadísticas y Datos</h2>
+                <div class="section-divider"></div>
+                <p>Análisis de la relación entre exposición solar y diagnóstico de cáncer de piel</p>
+            </div>
+            
+            <div class="stats-grid">
+                <div class="stat-card" style="opacity: 1; transform: translateY(0px); transition: opacity 0.6s, transform 0.6s;">
+                    <div class="stat-image">
+                        <img src="distribucion de horas de sol diarias por diagnostico de cancer de piel.jpg" alt="Distribución de horas de sol diarias por diagnóstico de cáncer de piel">
+                    </div>
+                    <div class="stat-content">
+                        <h3>Distribución de Exposición Solar</h3>
+                        <p>Este gráfico muestra la distribución de horas de exposición solar diaria en relación con los diferentes tipos de diagnóstico de cáncer de piel.</p>
+                        
+                    </div>
+                </div>
+
+                <div class="stat-card" style="opacity: 1; transform: translateY(0px); transition: opacity 0.6s, transform 0.6s;">
+                    <div class="stat-image">
+                        <img alt="Horas de sol diarias vs probabilidad del cáncer de piel" src="horas de sol diarias vs probabilidad del cancer de piel.jpg">
+                    </div>
+                    <div class="stat-content">
+                        <h3>Probabilidad vs Exposición Solar</h3>
+                        <p>Esta visualización correlaciona directamente las horas de exposición solar diaria con la probabilidad de desarrollar cáncer de piel.</p>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Conclusión -->
+    <section id="conclusion" class="section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Conclusión</h2>
+                <div class="section-divider"></div>
+            </div>
+            <div class="conclusion-content">
+                <div class="conclusion-text">
+                    <p>Los datos evidencian patrones relevantes acerca del impacto de la exposición solar acumulativa en el riesgo de desarrollar la enfermedad. Los resultados muestran una asociación consistente entre la radiación ultravioleta y dicho riesgo, lo que respalda científicamente las recomendaciones de fotoprotección. En este sentido, la evidencia señala de manera contundente la existencia de una correlación directa entre la exposición solar y la probabilidad de desarrollar esta patología.</p>
+                    
+                    
+                    
+                    
+                    
+                </div>
+                <div class="conclusion-callout">
+                    <div class="callout-card" style="opacity: 1; transform: translateY(0px); transition: opacity 0.6s, transform 0.6s;">
+                        <i class="fas fa-hand-holding-heart"></i>
+                        
+                        <p>La prevención es siempre mejor que el tratamiento. Protege tu piel, protege tu vida.</p>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Chatbot Section -->
+    <section id="chatbot" class="section bg-light">
+        <div class="container">
+            <div class="section-header">
+                <h2>Asistente Virtual</h2>
+                <div class="section-divider"></div>
+                <p>¿Tienes preguntas sobre el cáncer de piel? Nuestro asistente virtual está aquí para ayudarte</p>
+            </div>
+            
+            <div class="chatbot-intro">
+                <div class="chatbot-info" style="opacity: 1; transform: translateY(0px); transition: opacity 0.6s, transform 0.6s;">
+                    <div class="chatbot-icon">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <div class="chatbot-text">
+                        <h3>Asistente Médico Virtual</h3>
+                        <p>El chatbot tiene como propósito resolver inquietudes relacionadas con el cáncer de piel, así como ofrecer información acerca del proceso seguido para la elaboración de la gráfica presentada en esta página.</p>
+                        
+                        
+                    </div>
+                </div>
+            </div>
+            
+            <div class="chatbot-container">
+                <iframe src="https://www.chatbase.co/chatbot-iframe/w4R5m0epdlFoomBEEJwmw" width="100%" style="height: 100%; min-height: 700px" frameborder="0"></iframe>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>MedInfo</h4>
+                    <p>Información médica confiable y actualizada para el cuidado de tu salud.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4>Enlaces Útiles</h4>
+                    <ul>
+                        <li><a href="#">Acerca de Nosotros</a></li>
+                        <li><a href="#">Política de Privacidad</a></li>
+                        <li><a href="#">Términos de Uso</a></li>
+                        <li><a href="#">Contacto</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Recursos Médicos</h4>
+                    <ul>
+                        <li><a href="#">Biblioteca Médica</a></li>
+                        <li><a href="#">Artículos Científicos</a></li>
+                        <li><a href="#">Guías de Prevención</a></li>
+                        <li><a href="#">Encuentra un Especialista</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contacto de Emergencia</h4>
+                    <p><i class="fas fa-phone"></i> 911 - Emergencias</p>
+                    <p><i class="fas fa-envelope"></i> info@medinfo.com</p>
+                    <p><i class="fas fa-map-marker-alt"></i> Centro Médico Principal</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2024 MedInfo. Todos los derechos reservados. La información proporcionada es solo con fines educativos y no sustituye la consulta médica profesional.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+
+
+<button class="scroll-to-top"><i class="fas fa-arrow-up"></i></button></body></html>
