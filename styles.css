@@ -283,7 +283,7 @@ body {
 }
 
 .stat-image img {
-    width: 50%;
+    width: 85%;
     height: 93%;
     object-fit: cover;
     transition: var(--transition);
@@ -685,3 +685,4 @@ html {
     border: none;
     border-radius: var(--border-radius-lg);
 }
+
