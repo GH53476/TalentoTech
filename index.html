@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      Colombia - Tierra de Diversidad | Asistente de Turismo con Voz
+    </title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(
+          135deg,
+          #ffd700 0%,
+          #ffd700 33%,
+          #003893 33%,
+          #003893 66%,
+          #ce1126 66%,
+          #ce1126 100%
+        );
+        min-height: 100vh;
+        padding: 20px;
+      }
+
+      .main-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding-bottom: 100px; /* Espacio para el chatbot flotante */
+      }
+
+      .content-section {
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+      }
+
+      .hero-section {
+        background: linear-gradient(
+          135deg,
+          #ffd700 0%,
+          #003893 50%,
+          #ce1126 100%
+        );
+        color: white;
+        padding: 40px;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .hero-section::before {
+        content: "";
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="20" r="2" fill="rgba(255,255,255,0.1)"/><circle cx="80" cy="40" r="1.5" fill="rgba(255,255,255,0.1)"/><circle cx="40" cy="80" r="1" fill="rgba(255,255,255,0.1)"/></svg>');
+        animation: float 20s infinite linear;
+      }
+
+      @keyframes float {
+        0% {
+          transform: translateX(-50px) translateY(-50px);
+        }
+        100% {
+          transform: translateX(50px) translateY(50px);
+        }
+      }
+
+      .hero-content {
+        position: relative;
+        z-index: 1;
+      }
+
+      .hero-section h1 {
+        font-size: 3rem;
+        margin-bottom: 15px;
+        font-weight: 700;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+      }
+
+      .hero-section .subtitle {
+        font-size: 1.3rem;
+        margin-bottom: 20px;
+        opacity: 0.95;
+      }
+
+      .flag-colors {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        margin-top: 20px;
+      }
+
+      .flag-color {
+        width: 40px;
+        height: 8px;
+        border-radius: 4px;
+      }
+
+      .yellow {
+        background: #ffd700;
+      }
+      .blue {
+        background: #003893;
+      }
+      .red {
+        background: #ce1126;
+      }
+
+      .intro-section {
+        padding: 40px;
+        background: white;
+      }
+
+      .intro-section h2 {
+        color: #2c3e50;
+        font-size: 2.2rem;
+        margin-bottom: 20px;
+        text-align: center;
+      }
+
+      .intro-text {
+        font-size: 1.1rem;
+        line-height: 1.8;
+        color: #34495e;
+        text-align: justify;
+        margin-bottom: 30px;
+      }
+
+      .features-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 25px;
+        margin-top: 30px;
+      }
+
+      .feature-card {
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        padding: 25px;
+        border-radius: 15px;
+        text-align: center;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        border-left: 4px solid #ffd700;
+      }
+
+      .feature-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+      }
+
+      .feature-icon {
+        font-size: 2.5rem;
+        margin-bottom: 15px;
+        display: block;
+      }
+
+      .feature-card h3 {
+        color: #2c3e50;
+        font-size: 1.3rem;
+        margin-bottom: 10px;
+      }
+
+      .feature-card p {
+        color: #7f8c8d;
+        line-height: 1.6;
+      }
+
+      .feature-image {
+        width: 100%;
+        height: 200px;
+        border-radius: 12px;
+        overflow: hidden;
+        margin-bottom: 15px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      }
+
+      .feature-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.3s ease;
+      }
+
+      .feature-card:hover .feature-image img {
+        transform: scale(1.05);
+      }
+
+      /* Variables CSS personalizadas para el chatbot con colores de Colombia */
+      :root {
+        --chat--color-primary: #ffd700; /* Amarillo de la bandera */
+        --chat--color-primary-shade-50: #ffc107;
+        --chat--color-primary-shade-100: #ff8f00;
+        --chat--color-secondary: #003893; /* Azul de la bandera */
+        --chat--color-secondary-shade-50: #002a6b;
+        --chat--color-secondary-shade-100: #001f4d;
+        --chat--color-white: #ffffff;
+        --chat--color-light: #f2f4f8;
+        --chat--color-light-shade-50: #e6e9f1;
+        --chat--color-light-shade-100: #c2c5cc;
+        --chat--color-medium: #d2d4d9;
+        --chat--color-dark: #ce1126; /* Rojo de la bandera */
+        --chat--color-disabled: #777980;
+        --chat--color-typing: #404040;
+
+        --chat--spacing: 1rem;
+        --chat--border-radius: 0.25rem;
+        --chat--transition-duration: 0.15s;
+
+        --chat--window--width: 400px;
+        --chat--window--height: 600px;
+
+        --chat--header-height: auto;
+        --chat--header--padding: var(--chat--spacing);
+        --chat--header--background: linear-gradient(135deg, #e52d47, #ce1126);
+        --chat--header--color: var(--chat--color-light);
+        --chat--header--border-top: none;
+        --chat--header--border-bottom: none;
+        --chat--heading--font-size: 1.5em;
+        --chat--subtitle--font-size: 0.9em;
+        --chat--subtitle--line-height: 1.5;
+
+        --chat--textarea--height: 50px;
+
+        --chat--message--font-size: 1rem;
+        --chat--message--padding: var(--chat--spacing);
+        --chat--message--border-radius: 18px;
+        --chat--message-line-height: 1.6;
+        --chat--message--bot--background: var(--chat--color-white);
+        --chat--message--bot--color: var(--chat--color-dark);
+        --chat--message--bot--border: none;
+        --chat--message--user--background: var(--chat--color-secondary);
+        --chat--message--user--color: var(--chat--color-white);
+        --chat--message--user--border: none;
+        --chat--message--pre--background: rgba(0, 0, 0, 0.05);
+
+        --chat--toggle--background: var(--chat--color-primary);
+        --chat--toggle--hover--background: var(--chat--color-primary-shade-50);
+        --chat--toggle--active--background: var(
+          --chat--color-primary-shade-100
+        );
+        --chat--toggle--color: var(--chat--color-dark);
+        --chat--toggle--size: 64px;
+      }
+
+      /* Chatbot flotante en la parte inferior */
+      .floating-chatbot {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        width: 380px;
+        max-height: calc(100vh - 40px);
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        overflow: hidden;
+        z-index: 1000;
+        transform: translateY(calc(100% + 30px));
+        transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      .floating-chatbot.open {
+        transform: translateY(0);
+      }
+
+      .chatbot-toggle {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        width: var(--chat--toggle--size);
+        height: var(--chat--toggle--size);
+        background: var(--chat--toggle--background);
+        border-radius: 50%;
+        border: none;
+        color: var(--chat--toggle--color);
+        cursor: pointer;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        z-index: 1001;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: transform 0.3s ease, opacity 0.3s ease,
+          background-color 0.3s ease;
+        opacity: 1;
+      }
+
+      .chatbot-toggle svg {
+        width: 32px;
+        height: 32px;
+      }
+
+      .chatbot-toggle:hover {
+        transform: scale(1.1);
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+        background: var(--chat--toggle--hover--background);
+      }
+
+      .chatbot-toggle.hidden {
+        transform: scale(0.5);
+        opacity: 0;
+        pointer-events: none;
+      }
+
+      .chatbot-header {
+        background: var(--chat--header--background);
+        color: var(--chat--header--color);
+        padding: var(--chat--header--padding);
+        text-align: center;
+        position: relative;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .chatbot-header h3 {
+        font-size: var(--chat--heading--font-size);
+        margin-bottom: 5px;
+        color: var(--chat--header--color);
+        font-weight: 600;
+      }
+
+      .chatbot-header p {
+        opacity: 0.9;
+        font-size: var(--chat--subtitle--font-size);
+        line-height: var(--chat--subtitle--line-height);
+        margin-bottom: 0;
+        color: var(--chat--header--color);
+      }
+
+      .close-chatbot {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        right: 15px;
+        background: none;
+        border: none;
+        color: white;
+        font-size: 1.5rem;
+        cursor: pointer;
+        opacity: 0.8;
+        transition: opacity 0.3s ease, transform 0.3s ease;
+      }
+
+      .close-chatbot:hover {
+        opacity: 1;
+        transform: translateY(-50%) scale(1.1);
+      }
+
+      .chatbot-container {
+        padding: 15px;
+        height: 450px;
+        max-height: calc(100vh - 220px);
+        display: flex;
+        flex-direction: column;
+      }
+
+      #chatbot-widget {
+        flex: 1;
+        overflow: hidden;
+        max-height: 100%;
+        overflow-y: auto;
+        scrollbar-width: thin;
+        scrollbar-color: #45b7d1 #f1f1f1;
+      }
+
+      /* Estilos para la scrollbar en WebKit (Chrome, Safari, Edge) */
+      #chatbot-widget::-webkit-scrollbar {
+        width: 8px;
+      }
+
+      #chatbot-widget::-webkit-scrollbar-track {
+        background: #f1f1f1;
+        border-radius: 4px;
+      }
+
+      #chatbot-widget::-webkit-scrollbar-thumb {
+        background: #45b7d1;
+        border-radius: 4px;
+        transition: background 0.3s ease;
+      }
+
+      #chatbot-widget::-webkit-scrollbar-thumb:hover {
+        background: #3a9bc1;
+      }
+
+      /* Estilos de Mensajes */
+      #chatbot-widget .message,
+      #chatbot-widget .chat-message,
+      #chatbot-widget [class*="message"],
+      #chatbot-widget [class*="Message"] {
+        margin-bottom: 8px !important;
+        padding: 10px 15px !important;
+        border-radius: var(--chat--message--border-radius) !important;
+        line-height: var(--chat--message-line-height) !important;
+        font-size: 0.95rem !important;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+      }
+
+      #chatbot-widget .user-message,
+      #chatbot-widget [class*="user"],
+      #chatbot-widget [class*="User"] {
+        border-bottom-right-radius: 4px !important;
+        background: var(--chat--message--user--background) !important;
+        color: var(--chat--message--user--color) !important;
+      }
+
+      #chatbot-widget .bot-message,
+      #chatbot-widget [class*="bot"],
+      #chatbot-widget [class*="Bot"],
+      #chatbot-widget [class*="assistant"] {
+        border-bottom-left-radius: 4px !important;
+        background: var(--chat--message--bot--background) !important;
+        color: var(--chat--message--bot--color) !important;
+      }
+
+      /* Indicador de escritura */
+      .n8n-chat-typing-indicator span {
+        height: 8px;
+        width: 8px;
+        background-color: var(--chat--color-medium);
+        border-radius: 50%;
+        display: inline-block;
+        animation: bob 1.4s infinite ease-in-out both;
+      }
+      .n8n-chat-typing-indicator span:nth-of-type(1) {
+        animation-delay: -0.32s;
+      }
+      .n8n-chat-typing-indicator span:nth-of-type(2) {
+        animation-delay: -0.16s;
+      }
+      @keyframes bob {
+        0%,
+        80%,
+        100% {
+          transform: scale(0);
+        }
+        40% {
+          transform: scale(1);
+        }
+      }
+
+      /* Controles de audio */
+      .audio-controls {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        margin-top: 15px;
+        padding: 10px;
+        background: #f8f9fa;
+        border-radius: 10px;
+      }
+
+      .audio-btn {
+        background: var(--chat--color-secondary);
+        border: none;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        color: var(--chat--color-white);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.1rem;
+        transition: transform var(--chat--transition-duration) ease,
+          box-shadow var(--chat--transition-duration) ease,
+          background var(--chat--transition-duration) ease;
+      }
+
+      .audio-btn:hover {
+        transform: scale(1.1);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        background: var(--chat--color-secondary-shade-50);
+      }
+
+      .audio-btn:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+        transform: none;
+      }
+
+      .audio-btn.playing {
+        background: var(--chat--color-primary);
+        animation: pulse 1s infinite;
+      }
+
+      @keyframes pulse {
+        0% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.1);
+        }
+        100% {
+          transform: scale(1);
+        }
+      }
+
+      .footer {
+        background: linear-gradient(135deg, #003893 0%, #ce1126 100%);
+        color: white;
+        padding: 30px;
+        text-align: center;
+        margin-top: 30px;
+        border-radius: 20px;
+      }
+
+      .footer h4 {
+        font-size: 1.3rem;
+        margin-bottom: 15px;
+        color: #ffd700;
+      }
+
+      .footer p {
+        opacity: 0.8;
+        line-height: 1.6;
+      }
+
+      .footer a {
+        color: #ffd700;
+        text-decoration: none;
+        font-weight: 500;
+      }
+
+      .footer a:hover {
+        text-decoration: underline;
+      }
+
+      @media (max-width: 768px) {
+        .hero-section {
+          padding: 30px 20px;
+        }
+
+        .hero-section h1 {
+          font-size: 2.2rem;
+        }
+
+        .intro-section {
+          padding: 30px 20px;
+        }
+
+        .features-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .floating-chatbot {
+          width: calc(100vw - 20px);
+          right: 10px;
+          left: 10px;
+          bottom: 10px;
+          max-height: calc(100vh - 80px);
+        }
+
+        .chatbot-container {
+          height: calc(100vh - 180px);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="main-container">
+      <!-- Sección principal de contenido -->
+      <div class="content-section">
+        <!-- Hero Section -->
+        <div class="hero-section">
+          <div class="hero-content">
+            <h1>🇨🇴 Colombia</h1>
+            <p class="subtitle">Tierra de Diversidad y Magia</p>
+            <div class="flag-colors">
+              <div class="flag-color yellow"></div>
+              <div class="flag-color blue"></div>
+              <div class="flag-color red"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sección de Introducción -->
+        <div class="intro-section">
+          <h2>Descubre la Magia de Colombia</h2>
+          <p class="intro-text">
+            Colombia es un país que te sorprenderá en cada rincón. Desde las
+            playas caribeñas de Cartagena hasta las montañas nevadas de la
+            Sierra Nevada, pasando por la selva amazónica y los cafetales del
+            Eje Cafetero. Un destino único donde la diversidad cultural, natural
+            y gastronómica se combinan para crear experiencias inolvidables.
+          </p>
+
+          <p class="intro-text">
+            Con más de 50 millones de habitantes, Colombia es el segundo país
+            más biodiverso del mundo, hogar de más de 1,900 especies de aves y
+            una riqueza cultural que se refleja en sus 32 departamentos, cada
+            uno con su propia identidad y encanto único.
+          </p>
+
+          <!-- Grid de Características -->
+          <div class="features-grid">
+            <div class="feature-card">
+              <div class="feature-image">
+                <img
+                  src="https://www.ryansmithphotography.com/wp-content/uploads/2018/03/Sesga-River-.jpg"
+                  alt="Río Sisga"
+                />
+              </div>
+              <h3>Diversidad Geográfica</h3>
+              <p>
+                Desde playas tropicales hasta picos nevados, Colombia ofrece
+                todos los climas y paisajes en un solo país.
+              </p>
+            </div>
+
+            <div class="feature-card">
+              <div class="feature-image">
+                <img
+                  src="https://myvirtualworldtrip.com/wp-content/uploads/2023/04/taza-de-cafe-1.png"
+                  alt="Café colombiano"
+                />
+              </div>
+              <h3>Café de Excelencia</h3>
+              <p>
+                El mejor café del mundo se cultiva en nuestras montañas.
+                Descubre el Eje Cafetero, patrimonio de la humanidad.
+              </p>
+            </div>
+
+            <div class="feature-card">
+              <div class="feature-image">
+                <img
+                  src="https://upload.wikimedia.org/wikipedia/commons/e/e3/Pasto_20060106_001.jpg"
+                  alt="Carnaval de Blancos y Negros"
+                />
+              </div>
+              <h3>Riqueza Cultural</h3>
+              <p>
+                Música, danza, arte y tradiciones que se han transmitido por
+                generaciones y hoy son patrimonio mundial.
+              </p>
+            </div>
+
+            <div class="feature-card">
+              <div class="feature-image">
+                <img
+                  src="https://www.suamena.com/wp-content/uploads/2021/05/Cattleya-Trianae-Orchid.jpg"
+                  alt="Biodiversidad colombiana"
+                />
+              </div>
+              <h3>Biodiversidad Única</h3>
+              <p>
+                El país más biodiverso por metro cuadrado del planeta, con
+                especies únicas en el mundo.
+              </p>
+            </div>
+
+            <div class="feature-card">
+              <div class="feature-image">
+                <img
+                  src="https://blog.howlanders.com/wp-content/uploads/2021/01/calle-ciudad-colombia.jpg"
+                  alt="Cartagena de Indias"
+                />
+              </div>
+              <h3>Ciudades Históricas</h3>
+              <p>
+                Cartagena, Mompox, Villa de Leyva y más ciudades coloniales que
+                te transportan en el tiempo.
+              </p>
+            </div>
+
+            <div class="feature-card">
+              <div class="feature-image">
+                <img
+                  src="https://www.tripsavvy.com/thmb/5DiuuOVAXUoQV4Bkn6gIW64Fy2Y%3D/1500x0/filters%3Ano_upscale%28%29%3Amax_bytes%28150000%29%3Astrip_icc%28%29/bandeja-paisa-typical-colombian-food-628812340-d309ef7da9ab44ee93ec60628f68c4df.jpg"
+                  alt="Gastronomía colombiana"
+                />
+              </div>
+              <h3>Gastronomía Excepcional</h3>
+              <p>
+                Sabores únicos que combinan tradiciones indígenas, africanas y
+                europeas en platos inolvidables.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+      <h4>¡Ven y Descubre Colombia!</h4>
+      <p>
+        Un país que te espera con los brazos abiertos, donde cada región tiene
+        su propia magia y cada persona tiene una sonrisa para compartir.
+        <br /><br />
+        Powered by
+        <a href="https://cristian1108.app.n8n.cloud" target="_blank"
+          >n8n Cloud</a
+        >
+        | Desarrollado con ❤ para promover el turismo en Colombia
+      </p>
+    </div>
+
+    <!-- Botón flotante para abrir el chatbot -->
+    <button class="chatbot-toggle" id="chatbotToggle">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <path
+          d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"
+        ></path>
+      </svg>
+    </button>
+
+    <!-- Chatbot flotante -->
+    <div class="floating-chatbot" id="floatingChatbot">
+      <div class="chatbot-header">
+        <h3>🤖 Asistente de Turismo</h3>
+        <p>Pregúntame sobre destinos, actividades y consejos</p>
+        <button class="close-chatbot" id="closeChatbot">×</button>
+      </div>
+      <div class="chatbot-container">
+        <div id="chatbot-widget"></div>
+        <div class="audio-controls">
+          <button
+            class="audio-btn"
+            id="toggleAudio"
+            title="Activar/Desactivar audio"
+          >
+            🔊
+          </button>
+          <button
+            class="audio-btn"
+            id="stopAudio"
+            title="Detener audio"
+            disabled
+          >
+            ⏹
+          </button>
+          <button
+            class="audio-btn"
+            id="testVoice"
+            title="Probar voz colombiana"
+          >
+            🎤
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script type="module">
+      import { createChat } from "https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js";
+
+      // Variables globales
+      let chatInstance = null;
+      let isChatOpen = false;
+      let audioEnabled = true;
+      let currentSpeech = null;
+
+      // Elementos del DOM
+      const chatbotToggle = document.getElementById("chatbotToggle");
+      const floatingChatbot = document.getElementById("floatingChatbot");
+      const closeChatbot = document.getElementById("closeChatbot");
+      const toggleAudioBtn = document.getElementById("toggleAudio");
+      const stopAudioBtn = document.getElementById("stopAudio");
+      const testVoiceBtn = document.getElementById("testVoice");
+
+      // Configuración de síntesis de voz con acento colombiano
+      function setupColombianVoice() {
+        if ("speechSynthesis" in window) {
+          const voices = speechSynthesis.getVoices();
+          let colombianVoice = voices.find(
+            (voice) =>
+              voice.lang.startsWith("es") &&
+              (voice.name.includes("Colombia") ||
+                voice.name.includes("Spanish") ||
+                voice.name.includes("Español"))
+          );
+          if (!colombianVoice) {
+            colombianVoice = voices.find((voice) =>
+              voice.lang.startsWith("es")
+            );
+          }
+          return colombianVoice;
+        }
+        return null;
+      }
+
+      // Función para hablar con acento colombiano
+      function speakColombian(text) {
+        if (!audioEnabled || !("speechSynthesis" in window)) return;
+        speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(text);
+        const voice = setupColombianVoice();
+        if (voice) {
+          utterance.voice = voice;
+        }
+        utterance.lang = "es-CO";
+        utterance.rate = 1.8;
+        utterance.pitch = 1.5;
+        utterance.volume = 0.8;
+        utterance.onstart = () => {
+          toggleAudioBtn.classList.add("playing");
+          stopAudioBtn.disabled = false;
+        };
+        utterance.onend = () => {
+          toggleAudioBtn.classList.remove("playing");
+          stopAudioBtn.disabled = true;
+          currentSpeech = null;
+        };
+        utterance.onerror = () => {
+          toggleAudioBtn.classList.remove("playing");
+          stopAudioBtn.disabled = true;
+          currentSpeech = null;
+        };
+        currentSpeech = utterance;
+        speechSynthesis.speak(utterance);
+      }
+
+      // Función para detener el audio
+      function stopAudio() {
+        speechSynthesis.cancel();
+        toggleAudioBtn.classList.remove("playing");
+        stopAudioBtn.disabled = true;
+        currentSpeech = null;
+      }
+
+      // Función para alternar audio
+      function toggleAudio() {
+        audioEnabled = !audioEnabled;
+        toggleAudioBtn.textContent = audioEnabled ? "🔊" : "🔇";
+        toggleAudioBtn.title = audioEnabled
+          ? "Desactivar audio"
+          : "Activar audio";
+        if (!audioEnabled) {
+          stopAudio();
+        }
+      }
+
+      // Función para probar la voz
+      function testVoice() {
+        const testText =
+          "¡Hola, parce! Soy tu asistente de turismo colombiano. ¿Cómo le puedo colaborar?";
+        speakColombian(testText);
+      }
+
+      // Función para abrir/cerrar el chatbot
+      function toggleChatbot() {
+        isChatOpen = !isChatOpen;
+        if (isChatOpen) {
+          floatingChatbot.classList.add("open");
+          chatbotToggle.classList.add("hidden");
+        } else {
+          floatingChatbot.classList.remove("open");
+          chatbotToggle.classList.remove("hidden");
+        }
+      }
+
+      // Event listeners
+      chatbotToggle.addEventListener("click", toggleChatbot);
+      closeChatbot.addEventListener("click", toggleChatbot);
+      toggleAudioBtn.addEventListener("click", toggleAudio);
+      stopAudioBtn.addEventListener("click", stopAudio);
+      testVoiceBtn.addEventListener("click", testVoice);
+
+      if ("speechSynthesis" in window) {
+        speechSynthesis.onvoiceschanged = () => {
+          setupColombianVoice();
+        };
+      }
+
+      // Crear el chatbot
+      createChat({
+        target: "#chatbot-widget",
+        webhookUrl:
+          "https://cristian1108.app.n8n.cloud/webhook/8c86571b-36af-43d1-a958-e2cc0cb67e02/chat",
+        showWelcomeScreen: true,
+        i18n: {
+          en: {
+            title: "¡Hola! 👋",
+            subtitle: "Estoy aquí para ayudarte.",
+            inputPlaceholder: "Escribe tu pregunta…",
+            getStarted: "Nueva conversación",
+          },
+        },
+        initialMessages: ["Hola, parce. ¿Cómo le puedo colaborar?"],
+        onMessage: (message) => {
+          if (message.type === "bot") {
+            speakColombian(message.text);
+          }
+        },
+      });
+    </script>
+  </body>
+</html>
